@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>AI Usage Insights</title>
+  </head>
+  <body>
+    <div id="app-loading" class="app-loading" hidden aria-live="polite" aria-busy="true">
+      <div class="app-loading-panel"><span class="loading-spinner" aria-hidden="true"></span><strong id="app-loading-label">전체 동기화 중…</strong><small>Codex · Claude Code · Antigravity</small></div>
+    </div>
+    <main class="page">
+      <section class="card import-card" aria-labelledby="import-title">
+        <div>
+          <p class="eyebrow">STEP 1</p>
+          <h2 id="import-title">대화 기록 추가</h2>
+          <p>파일로 보관해 둔 대화를 직접 추가할 수 있습니다. 원문은 이 기기 밖으로 보내지 않습니다.</p>
+        </div>
+        <div class="actions">
+          <label class="button primary" for="file-input">파일에서 추가</label>
+          <input id="file-input" type="file" accept="application/json,.json,.jsonl" />
+        </div>
+        <p id="import-status" class="status" aria-live="polite">아직 가져온 기록이 없습니다.</p>
+      </section>
+
+      <section class="card vault-card" aria-labelledby="vault-title">
+        <div>
+          <p class="eyebrow">LOCAL ENCRYPTED VAULT</p>
+          <h2 id="vault-title">대화 원문 보관함</h2>
+          <p>대화를 다음 실행에서도 이어서 보려면 이 기기에 암호화해 보관할 수 있습니다.</p>
+        </div>
+        <form id="vault-form" class="vault-form">
+          <label for="vault-password">마스터 비밀번호</label>
+          <input id="vault-password" type="password" minlength="12" autocomplete="new-password" required placeholder="12자 이상" />
+          <button class="button primary" type="submit">보관함 열기</button>
+        </form>
+        <p id="vault-status" class="status">vault가 잠겨 있습니다. 비밀번호는 저장하거나 복구할 수 없습니다.</p>
+        <div class="sync-actions">
+          <button id="sync-now" class="button secondary" type="button" disabled>지금 동기화</button>
+          <span id="sync-status">보관함을 열면 새 대화를 자동으로 확인할 수 있습니다.</span>
+        </div>
+      </section>
+
+      <section class="card central-card" aria-labelledby="central-title">
+        <div>
+          <p class="eyebrow">OPTIONAL CENTRAL ANALYSIS</p>
+          <h2 id="central-title">중앙 분석 연결</h2>
+          <p>원문 대신 가림본만 사용합니다. 원할 때 새로 들어온 대화를 중앙 분석에 보낼 수 있습니다.</p>
+        </div>
+        <form id="central-form" class="central-form">
+          <label for="central-url">중앙 API 주소</label>
+          <input id="central-url" type="url" value="http://127.0.0.1:8787" required />
+          <label for="central-token">접속 토큰</label>
+          <input id="central-token" type="password" value="local-dev-token" autocomplete="off" required />
+          <label class="consent-label"><input id="central-consent" type="checkbox" /> 가림본 이벤트를 중앙 분석 서버로 보내는 데 동의합니다.</label>
+          <div class="central-actions"><button id="central-analyze" class="button primary" type="submit">누락분만 분석</button><button id="central-retry" class="button secondary" type="button" disabled>대기 큐 재시도</button><button id="central-full-reanalyze" class="button secondary" type="submit">Jev 전체 분석·저장</button><button id="central-cancel" class="button secondary" type="button" disabled>현재 분석 중단</button></div>
+          <p class="detail-note">Jev 전체 분석·저장은 모든 사용자 발화를 Jev에 다시 보내고, 결과를 로컬 SQLite에 저장합니다. 이후에는 신규 발화만 분석합니다.</p>
+        </form>
+        <div id="central-progress-wrap" class="central-progress" hidden>
+          <div class="central-progress-label"><span id="central-progress-label">분석 준비 중</span><strong id="central-progress-percent">0%</strong></div>
+          <progress id="central-progress" max="1" value="0" aria-label="중앙 분석 진행률"></progress>
+        </div>
+        <p id="central-status" class="status" aria-live="polite">중앙 분석을 사용하지 않는 상태입니다.</p>
+      </section>
+
+      <section class="card data-card" aria-labelledby="data-title">
+        <div>
+          <p class="eyebrow">LOCAL DATA CONTROL</p>
+          <h2 id="data-title">로컬 데이터 관리</h2>
+          <p>현재 선택된 날짜·도구의 이벤트를 삭제하거나 분석 결과만 초기화할 수 있습니다. 삭제 후에는 복구할 수 없습니다.</p>
+        </div>
+        <div class="actions">
+          <button id="delete-filtered" class="button secondary" type="button">현재 필터 이벤트 삭제</button>
+          <button id="clear-analysis" class="button secondary" type="button">분석 결과 삭제</button>
+          <button id="clear-feedback" class="button secondary" type="button">수정 피드백 삭제</button>
+          <button id="clear-vault" class="button danger" type="button">전체 vault 초기화</button>
+        </div>
+        <p id="data-status" class="status" aria-live="polite">삭제할 데이터 범위는 현재 필터를 따릅니다.</p>
+      </section>
+
+      <section class="card scan-card" aria-labelledby="scan-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">AUTO SCAN</p>
+            <h2 id="scan-title">내 컴퓨터와의 대화 찾기</h2>
+          </div>
+        </div>
+        <p>세 도구의 로컬 기록 위치를 읽기 전용으로 확인합니다. 필요한 도구만 골라 가져오거나 한 번에 전체 동기화할 수 있습니다.</p>
+        <div class="actions scan-actions">
+          <button id="import-all" class="button primary sync-all-button" type="button"><span class="sync-glyph" aria-hidden="true">↻</span><span>전체 동기화</span></button>
+          <button id="import-codex" class="button secondary" type="button">Codex 대화</button>
+          <button id="import-claude" class="button secondary" type="button">Claude Code 대화</button>
+          <button id="import-antigravity" class="button secondary" type="button">Antigravity 대화</button>
+          <button id="scan-sources" class="button secondary" type="button">기록 위치 다시 찾기</button>
+        </div>
+        <ul id="source-list" class="source-list" aria-live="polite"></ul>
+      </section>
+
+      <section class="dashboard" aria-label="가져온 기록 분석">
+        <article class="card metric">
+          <p>정규화된 이벤트</p>
+          <strong id="event-count">0</strong>
+          <span>원문은 이 화면에 저장하지 않습니다</span>
+        </article>
+        <article class="card metric">
+          <p>분류 후보</p>
+          <strong id="candidate-count">0</strong>
+          <span>중앙 분석 전의 보수적 후보입니다</span>
+        </article>
+        <article class="card metric">
+          <p>토큰 사용량</p>
+          <strong id="token-total">—</strong>
+          <span>도구가 제공한 값만 합산합니다</span>
+        </article>
+        <article class="card metric">
+          <p>질문 명확도</p>
+          <strong id="clarity-score">—</strong>
+          <span>중앙 분석 전에는 로컬 기준선입니다</span>
+        </article>
+        <article class="card metric">
+          <p>마찰 신호</p>
+          <strong id="friction-count">—</strong>
+          <span>욕설·교정은 감정 점수가 아닌 관측 신호입니다</span>
+        </article>
+      </section>
+
+      <section class="card export-card" aria-labelledby="export-title">
+        <div>
+          <p class="eyebrow">EXPORT</p>
+          <h2 id="export-title">분석 결과 내보내기</h2>
+          <p>분석 결과와 가림본은 공유·재사용용으로, 원문은 기기 보관용으로만 내보냅니다.</p>
+        </div>
+        <div class="actions">
+          <button id="export-redacted-json" class="button secondary" type="button">가림본 JSON</button>
+          <button id="export-redacted-csv" class="button secondary" type="button">가림본 CSV</button>
+          <button id="export-feedback-json" class="button secondary" type="button">수정 피드백 JSON</button>
+          <button id="export-raw-json" class="button secondary" type="button">원문 JSON</button>
+        </div>
+        <p id="export-status" class="status" aria-live="polite">현재 선택된 기록을 내보냅니다.</p>
+      </section>
+
+      <section class="card analysis-card" aria-labelledby="analysis-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CURRENT ANALYSIS</p>
+            <h2 id="analysis-title">사용 방식 분포</h2>
+          </div>
+          <span id="analysis-confidence" class="badge">후보 분석</span>
+        </div>
+        <p id="analysis-note" class="analysis-note">사용자 발화만 현재 로컬 규칙으로 분류합니다. 중앙 AI의 최종 판정은 아직 연결되지 않았습니다.</p>
+        <div class="analysis-layout">
+          <div id="analysis-pie" class="analysis-pie" role="img" aria-label="사용 방식 분포 파이 차트"></div>
+          <ul id="analysis-legend" class="analysis-legend" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="card baseline-card" aria-labelledby="baseline-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">REFERENCE BASELINE</p>
+            <h2 id="baseline-title">기준선과 비교</h2>
+          </div>
+          <span class="badge">참고용</span>
+        </div>
+        <p id="baseline-note" class="analysis-note">현재 활동 비율과 사용자가 제시한 기준선을 비교합니다. 목표 점수나 평가 등급이 아닙니다.</p>
+        <ul id="baseline-comparison" class="baseline-comparison" aria-live="polite"></ul>
+      </section>
+
+      <section class="card source-compare-card" aria-labelledby="source-compare-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TOOL COMPARISON</p>
+            <h2 id="source-compare-title">AI 도구별 비교</h2>
+          </div>
+          <span class="badge">현재 필터 기준</span>
+        </div>
+        <ul id="source-comparison" class="source-comparison" aria-live="polite"></ul>
+      </section>
+
+      <section class="card token-card" aria-labelledby="token-detail-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">TOKEN DETAILS</p>
+            <h2 id="token-detail-title">도구별 토큰 사용량</h2>
+          </div>
+          <span class="badge">관측된 값만 합산</span>
+        </div>
+        <ul id="token-breakdown" class="token-breakdown" aria-live="polite"></ul>
+      </section>
+
+      <section class="card trend-card" aria-labelledby="trend-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">DAILY TREND</p>
+            <h2 id="trend-title">일간 질문 명확도 추이</h2>
+          </div>
+          <span class="badge">중앙 분석 결과 기준</span>
+        </div>
+        <p id="trend-note" class="analysis-note">중앙 분석을 완료하면 날짜별 평균 점수가 표시됩니다.</p>
+        <ul id="clarity-trend" class="clarity-trend" aria-live="polite"></ul>
+      </section>
+
+      <section class="card daily-insight-card" aria-labelledby="daily-insight-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">DAILY INSIGHTS</p>
+            <h2 id="daily-insight-title">날짜별 질문 품질 요약</h2>
+          </div>
+          <span class="badge">최근 7일</span>
+        </div>
+        <p id="daily-insight-note" class="analysis-note">중앙 분석 결과가 쌓이면 날짜별 이유와 마찰 유형이 표시됩니다.</p>
+        <ul id="daily-insights" class="daily-insights" aria-live="polite"></ul>
+      </section>
+
+      <section class="card period-card" aria-labelledby="period-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PERIOD SUMMARY</p>
+            <h2 id="period-title">주간·월간 집계</h2>
+          </div>
+          <span class="badge">중앙 분석 결과 기준</span>
+        </div>
+        <p id="period-note" class="analysis-note">중앙 분석 후 주간·월간 요약이 표시됩니다.</p>
+        <ul id="period-summary" class="period-summary" aria-live="polite"></ul>
+      </section>
+
+      <section id="date-section" class="card date-card" aria-labelledby="date-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BY DATE</p>
+            <h2 id="date-title">날짜별 대화</h2>
+          </div>
+          <span id="timezone" class="badge"></span>
+        </div>
+        <div class="date-controls" role="group" aria-label="날짜 필터">
+          <button id="date-all" class="date-filter selected" type="button">전체</button>
+          <button id="date-today" class="date-filter" type="button">오늘</button>
+        </div>
+        <div class="source-controls" role="group" aria-label="AI 도구 필터">
+          <span>도구</span>
+          <button data-source-filter="all" class="source-filter selected" type="button">모두</button>
+          <button data-source-filter="codex" class="source-filter" type="button">Codex</button>
+          <button data-source-filter="claude_code" class="source-filter" type="button">Claude Code</button>
+          <button data-source-filter="antigravity" class="source-filter" type="button">Antigravity</button>
+        </div>
+        <ul id="date-summary" class="date-summary" aria-live="polite"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="result-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">STEP 2</p>
+            <h2 id="result-title">후보 분류</h2>
+          </div>
+          <span class="badge">중앙 최종 판정 아님</span>
+        </div>
+        <p id="empty-state">파일 또는 예시 데이터를 가져오면, 사용자 발화의 후보 분류가 여기에 표시됩니다.</p>
+        <div class="classification-filters">
+          <label>분류 <select id="classification-kind-filter"><option value="all">모두</option><option value="productive_work">실제 작업</option><option value="agent_correction">에이전트 교정</option><option value="progress_check">진행 확인</option><option value="cross_agent_handoff">대화 전달</option><option value="resume_instruction">재개 지시</option><option value="simplify_explanation">쉬운 설명</option><option value="rule_reminder">규칙 재고지</option><option value="other">기타</option></select></label>
+          <label>마찰 <select id="classification-friction-filter"><option value="all">모두</option><option value="high">높음</option><option value="medium">중간</option><option value="low">낮음</option><option value="profanity">욕설</option><option value="repeated_request">반복 요구</option><option value="disagreement">의견 충돌</option><option value="assistant_error">AI 오류</option></select></label>
+        </div>
+        <ol id="classification-list" class="classification-list"></ol>
+        <div class="classification-pagination"><button id="classification-prev" class="button secondary" type="button">이전</button><span id="classification-page">1 / 1</span><button id="classification-next" class="button secondary" type="button">다음</button></div>
+      </section>
+    </main>
+    <div class="floating-controls" aria-label="빠른 메뉴">
+      <div class="floating-menu-wrap">
+        <button id="quick-menu-left" class="floating-menu-button" type="button" aria-label="빠른 메뉴 열기" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" /></svg>
+        </button>
+        <div id="quick-menu-panel" class="floating-menu-panel" hidden>
+          <button id="quick-menu-today" type="button">오늘 기록 보기</button>
+          <button id="quick-menu-all" type="button">전체 날짜 보기</button>
+          <button id="quick-menu-sync" type="button">전체 동기화</button>
+        </div>
+      </div>
+      <div class="floating-menu-wrap">
+        <button id="quick-menu-right" class="floating-menu-button" type="button" aria-label="화면 메뉴 열기" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18" /></svg>
+        </button>
+        <div id="appearance-menu-panel" class="floating-menu-panel floating-menu-panel-right" hidden>
+          <button id="theme-toggle" type="button"><span aria-hidden="true">◐</span> 화면 모드</button>
+          <button id="settings-open" type="button"><span aria-hidden="true">⚙</span> 설정</button>
+        </div>
+      </div>
+    </div>
+    <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title">
+      <form id="settings-form" method="dialog">
+        <div class="section-heading"><div><p class="eyebrow">SCHEDULE</p><h2 id="settings-title">자동 동기화 설정</h2></div><button id="settings-close" class="icon-button" type="button" aria-label="설정 닫기">×</button></div>
+        <p class="detail-note">설정한 주기와 시각에 세 도구를 증분 동기화하고, 새 이벤트가 있으면 중앙 분석을 요청합니다. 시간대는 이 기기의 현지 시간입니다.</p>
+        <label for="schedule-days">실행 주기 (1~7일)</label>
+        <input id="schedule-days" type="number" min="1" max="7" value="1" required />
+        <label for="schedule-hour">실행 시각 (0~23시)</label>
+        <input id="schedule-hour" type="number" min="0" max="23" value="9" required />
+        <label class="consent-label"><input id="schedule-enabled" type="checkbox" /> 자동 동기화 사용</label>
+        <div class="central-actions"><button class="button primary" type="submit">설정 저장</button><button id="settings-cancel" class="button secondary" type="button">취소</button></div>
+        <p id="settings-status" class="status" aria-live="polite"></p>
+      </form>
+    </dialog>
+    <dialog id="conversation-detail" class="detail-dialog" aria-labelledby="detail-title">
+      <form method="dialog" class="detail-header">
+        <div>
+          <p class="eyebrow">CONVERSATION DETAIL</p>
+          <h2 id="detail-title">질문 상세</h2>
+        </div>
+        <button class="icon-button" aria-label="상세 닫기" type="submit">×</button>
+      </form>
+      <dl id="detail-meta" class="detail-meta"></dl>
+      <div id="detail-insights" class="detail-insights" aria-live="polite">
+        <article class="detail-insight"><span>질문 명확도</span><strong>중앙 분석 전</strong><small>Jev 분석 후 점수와 낮은 이유가 표시됩니다.</small></article>
+        <article class="detail-insight"><span>마찰 원인</span><strong>중앙 분석 전</strong><small>욕설·반복 요구·의견 충돌 등의 원인을 표시합니다.</small></article>
+        <article class="detail-insight"><span>책임 방향</span><strong>중앙 분석 전</strong><small>사용자 쪽·AI 쪽·양쪽 모두·판단 불가로 표시합니다.</small></article>
+      </div>
+      <section>
+        <h3>내 질문</h3>
+        <pre id="detail-question" class="detail-text"></pre>
+      </section>
+      <section>
+        <h3>AI 응답</h3>
+        <pre id="detail-response" class="detail-text"></pre>
+      </section>
+      <section>
+        <h3>중앙 분석용 가림본</h3>
+        <p class="detail-note">원문은 기기 vault에 남고, 중앙으로 보낼 때는 아래 가림본만 사용합니다.</p>
+        <pre id="detail-redacted" class="detail-text"></pre>
+      </section>
+      <section>
+        <h3>반응 신호 해석</h3>
+        <p id="detail-reaction" class="detail-note"></p>
+        <h4>Jev 판단 원자료</h4>
+        <pre id="detail-analysis-evidence" class="detail-text detail-evidence"></pre>
+      </section>
+      <section class="feedback-section">
+        <h3>분류가 맞나요?</h3>
+        <p class="detail-note">수정 내용은 분석 결과와 분리해 vault에 저장하고, 다음 평가에만 사용합니다.</p>
+        <form id="feedback-form" class="feedback-form">
+          <label for="feedback-kind">올바른 분류</label>
+          <select id="feedback-kind"></select>
+          <label for="feedback-note">수정 이유 (선택)</label>
+          <input id="feedback-note" type="text" maxlength="300" placeholder="예: 새 작업이 아니라 범위 수정" />
+          <button class="button secondary" type="submit">수정 저장</button>
+        </form>
+        <p id="feedback-status" class="status" aria-live="polite"></p>
+      </section>
+    </dialog>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

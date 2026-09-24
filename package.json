@@ -1,0 +1,31 @@
+{
+  "name": "ai-usage-insights",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "tauri": "tauri",
+    "central:dev": "node server/ingestion-server.mjs",
+    "jev:smoke": "node server/jev-smoke.mjs",
+    "jev:quality": "node server/jev-quality-smoke.mjs",
+    "central:test": "node server/ingestion-server.test.mjs && node server/analysis-store.test.mjs && node server/analysis-engine.test.mjs && node server/clarity-calibration.test.mjs && node server/aggregation.test.mjs && node server/init-update.test.mjs && node server/init-scheduled.test.mjs && node server/model-adapter.test.mjs",
+    "init:update": "node server/init-update.mjs",
+    "init:scheduled": "node server/init-scheduled.mjs",
+    "analysis:evaluate": "node server/evaluation.mjs",
+    "security:check": "node server/security-check.mjs",
+    "security:public": "node server/public-check.mjs",
+    "release:check": "npm run security:check && npm run central:test && npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-stronghold": "^2.0.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^8.0.0"
+  }
+}
