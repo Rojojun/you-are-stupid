@@ -1,0 +1,11 @@
+[
+  { "text": "새 작업으로 로그인 화면을 구현해줘. 테스트도 추가해줘.", "expectedKind": "productive_work" },
+  { "text": "묻지도 않고 범위를 바꾸면 안 돼. 원래 방향으로 고쳐.", "expectedKind": "agent_correction" },
+  { "text": "지금 어디까지 진행됐어?", "expectedKind": "progress_check" },
+  { "text": "다른 채팅에 이 내용을 옮겨줘.", "expectedKind": "cross_agent_handoff" },
+  { "text": "계속", "expectedKind": "resume_instruction" },
+  { "text": "쉬운 말로 다시 설명해줘.", "expectedKind": "simplify_explanation" },
+  { "text": "이미 말한 규칙을 다시 지켜줘.", "expectedKind": "rule_reminder" },
+  { "text": "오늘 날씨가 궁금해.", "expectedKind": "productive_work" }
+]
+

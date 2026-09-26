@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.data/
+node_modules/
+dist/
+src-tauri/target/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.jsonl
+*.log
+.DS_Store
