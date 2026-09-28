@@ -843,11 +843,11 @@ const exportData = (format: 'json' | 'csv', redacted: boolean): void => {
     }
   })
   const stamp = new Date().toISOString().slice(0, 10)
-  if (format === 'json') download(`ai-usage-insights-${redacted ? 'redacted' : 'raw'}-${stamp}.json`, JSON.stringify({ exportedAt: new Date().toISOString(), redacted, events: rows }, null, 2), 'application/json')
+  if (format === 'json') download(`yas-${redacted ? 'redacted' : 'raw'}-${stamp}.json`, JSON.stringify({ exportedAt: new Date().toISOString(), redacted, events: rows }, null, 2), 'application/json')
   else {
     const headers = Object.keys(rows[0])
     const csv = [headers, ...rows.map((row) => headers.map((header) => row[header as keyof typeof row]))].map((row) => row.map(csvCell).join(',')).join('\n')
-    download(`ai-usage-insights-redacted-${stamp}.csv`, `\ufeff${csv}`, 'text/csv;charset=utf-8')
+    download(`yas-redacted-${stamp}.csv`, `\ufeff${csv}`, 'text/csv;charset=utf-8')
   }
   exportStatus.textContent = `${events.length}개 이벤트를 ${redacted ? '가림본' : '원문'} ${format.toUpperCase()}로 내보냈습니다.`
 }
@@ -912,7 +912,7 @@ query<HTMLButtonElement>('#export-feedback-json').addEventListener('click', () =
     exportStatus.textContent = '내보낼 사용자 수정 피드백이 없습니다.'
     return
   }
-  download(`ai-usage-insights-feedback-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ schemaVersion: 1, exportedAt: new Date().toISOString(), cases: feedbackRows }, null, 2), 'application/json')
+  download(`yas-feedback-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ schemaVersion: 1, exportedAt: new Date().toISOString(), cases: feedbackRows }, null, 2), 'application/json')
   exportStatus.textContent = `${feedbackRows.length}개 사용자 수정 피드백을 평가 데이터셋 JSON으로 내보냈습니다.`
 })
 query<HTMLButtonElement>('#export-raw-json').addEventListener('click', () => {

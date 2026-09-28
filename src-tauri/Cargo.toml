@@ -1,8 +1,8 @@
 [package]
-name = "ai-usage-insights"
+name = "yas"
 version = "0.1.0"
-description = "Local-first AI usage insights"
-authors = ["AI Usage Insights"]
+description = "YAS — AI conversation self-review"
+authors = ["YAS"]
 edition = "2021"
 
 [build-dependencies]

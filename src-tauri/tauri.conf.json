@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "AI Usage Insights",
+  "productName": "YAS",
   "version": "0.1.0",
   "identifier": "com.deepnoid.aiusageinsights",
   "build": {
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "AI Usage Insights",
+        "title": "YAS",
         "width": 980,
         "height": 760,
         "minWidth": 640,

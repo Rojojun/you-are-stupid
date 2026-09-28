@@ -69,7 +69,7 @@ const recommendations = (classifications) => {
 }
 
 const block = (source, reports, classifications) => {
-  const title = `AI Usage Insights 추가 지침 · ${sourceNames[source]}`
+  const title = `YAS 추가 지침 · ${sourceNames[source]}`
   const lines = [`<!-- AI-USAGE-INSIGHTS:BEGIN source=${source} date=${date} -->`, `## ${title}`, '', '> 이 블록은 기존 init/MD 내용을 대체하지 않는 자동 생성 추가 지침입니다.', '']
   for (const report of reports) {
     const delta = report.clarityDelta === null ? '비교 데이터 없음' : `${report.clarityDelta >= 0 ? '+' : ''}${report.clarityDelta}점`

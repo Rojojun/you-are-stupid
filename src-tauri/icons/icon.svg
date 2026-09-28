@@ -1,7 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#0d6c60"/>
-  <path fill="#fff" d="M128 120h256v272H128z" opacity=".16"/>
-  <path fill="#fff" d="M168 166h176v28H168zm0 62h130v28H168zm0 62h176v28H168zm0 62h94v28h-94z"/>
-  <circle cx="342" cy="366" r="58" fill="#f5c36b"/>
-  <path fill="#0d6c60" d="m328 394-26-26 16-16 10 10 29-30 16 16z"/>
+  <g stroke="#202020" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M110 380C54 331 68 180 151 119c74-54 186-26 230 49 43 73 20 184-49 226-68 42-166 35-222-14Z" fill="#fff1c9" stroke-width="13"/>
+    <path d="M137 141c20-67 58-78 80-38 30-52 67-27 68 20 48-39 73 5 45 52" fill="#315dc7" stroke-width="12"/>
+    <ellipse cx="198" cy="228" rx="39" ry="49" fill="#fff" stroke-width="10"/>
+    <ellipse cx="312" cy="228" rx="39" ry="49" fill="#fff" stroke-width="10"/>
+    <circle cx="208" cy="238" r="15" fill="#202020" stroke="none"/>
+    <circle cx="303" cy="238" r="15" fill="#202020" stroke="none"/>
+    <path d="M208 314c30 30 67 30 97 0" fill="none" stroke-width="11"/>
+  </g>
+  <text x="256" y="492" text-anchor="middle" font-family="Arial, sans-serif" font-size="82" font-weight="900" fill="#e3483e">YAS!</text>
 </svg>

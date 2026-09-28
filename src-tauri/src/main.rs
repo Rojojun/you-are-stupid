@@ -494,7 +494,7 @@ fn main() {
             import_antigravity_conversations
         ])
         .run(tauri::generate_context!())
-        .expect("failed to run AI Usage Insights");
+        .expect("failed to run YAS");
 }
 
 #[cfg(test)]
@@ -503,7 +503,7 @@ mod tests {
 
     #[test]
     fn imports_only_user_and_assistant_text_messages_from_a_codex_rollout() {
-        let directory = env::temp_dir().join(format!("ai-usage-insights-codex-test-{}", std::process::id()));
+        let directory = env::temp_dir().join(format!("yas-codex-test-{}", std::process::id()));
         fs::create_dir_all(&directory).expect("create fixture directory");
         let fixture = directory.join("rollout.jsonl");
         fs::write(
@@ -533,7 +533,7 @@ mod tests {
 
     #[test]
     fn imports_claude_text_blocks_and_observed_assistant_tokens() {
-        let directory = env::temp_dir().join(format!("ai-usage-insights-claude-test-{}", std::process::id()));
+        let directory = env::temp_dir().join(format!("yas-claude-test-{}", std::process::id()));
         fs::create_dir_all(&directory).expect("create fixture directory");
         let fixture = directory.join("session.jsonl");
         fs::write(
