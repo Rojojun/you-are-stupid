@@ -49,20 +49,7 @@
     </g>
   </g>
   <g transform="translate(18 420)">
-    <g transform="translate(22 8)" stroke="#202020" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M54 172 C28 159 25 102 51 63 C71 31 131 31 153 67 C177 107 163 168 132 181 C107 192 76 187 54 172Z" fill="#fff1c9"/>
-      <path d="M53 64 C60 35 78 24 91 35 C103 14 119 21 121 38 C139 20 153 36 148 59" fill="#315dc7"/>
-      <ellipse cx="84" cy="76" rx="20" ry="25" fill="#fff"/>
-      <ellipse cx="127" cy="76" rx="20" ry="25" fill="#fff"/>
-      <circle cx="89" cy="80" r="8" fill="#202020" stroke="none"/>
-      <circle cx="123" cy="80" r="8" fill="#202020" stroke="none"/>
-      <circle cx="65" cy="111" r="10" fill="#e3483e" stroke="none"/>
-      <circle cx="146" cy="111" r="10" fill="#e3483e" stroke="none"/>
-      <path d="M104 116 C93 103 86 113 91 126 C97 139 111 136 116 121" fill="#fff1c9"/>
-      <path d="M78 155 C90 164 126 164 140 151" fill="none"/>
-      <path d="M62 171 C43 185 33 174 42 158" fill="none"/>
-      <path d="M139 169 C157 183 167 172 158 156" fill="none"/>
-    </g>
+    <image x="0" y="0" width="180" height="194" preserveAspectRatio="xMidYMax meet" href="yas-thinking.png" xlink:href="yas-thinking.png"/>
     <text x="82" y="224" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#202020" transform="rotate(-5 82 224)">“내가 문제였나?”</text>
   </g>
   <text x="600" y="48" text-anchor="middle" font-family="Arial, 'Apple SD Gothic Neo', sans-serif" font-size="30" font-weight="900" fill="#202020">YAS LOOP — 너를 분석해라</text>

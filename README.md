@@ -33,7 +33,7 @@ Jev 분석은 **선택 사항**이다. Jev 없이도 로컬 기준선으로 사�
 
 ## YAS의 루프
 
-![YAS loop diagram](assets/yas-loop.svg)
+![YAS loop diagram](assets/yas-loop.png)
 
 목표는 AI에게 더 세게 화내는 법이 아니다.
 
