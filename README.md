@@ -1,5 +1,7 @@
 # You Are Stupid! (YAS)
 
+![YAS crayon character](assets/yas-crayon.png)
+
 ## AI는 똑똑한데, 왜 내 답변은 점점 이상해질까?
 
 AI한테 욕해본 적 있지?
