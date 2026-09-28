@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">YAS learning loop</title>
+  <desc id="desc">대화 수집부터 더 나은 질문까지 반복되는 YAS의 분석 루프</desc>
+  <rect width="1200" height="760" rx="34" fill="#fffaf0"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M105 170 C300 55 520 80 700 145 S1010 235 1080 360" stroke="#202020" stroke-width="7" opacity=".16"/>
+    <path d="M105 167 C300 52 520 77 700 142 S1010 232 1080 357" stroke="#315dc7" stroke-width="4" stroke-dasharray="10 15"/>
+    <path d="M1080 357 C1115 505 950 625 750 645 S330 690 145 560" stroke="#202020" stroke-width="7" opacity=".16"/>
+    <path d="M1080 354 C1115 502 950 622 750 642 S330 687 145 557" stroke="#e3483e" stroke-width="4" stroke-dasharray="10 15"/>
+    <path d="M145 557 C72 455 62 270 105 170" stroke="#202020" stroke-width="7" opacity=".16"/>
+    <path d="M142 554 C69 452 59 267 102 167" stroke="#f2b928" stroke-width="4" stroke-dasharray="10 15"/>
+  </g>
+  <g font-family="Arial, 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">
+    <g transform="translate(55 105)">
+      <rect width="205" height="112" rx="25" fill="#ffe27a" stroke="#202020" stroke-width="4"/>
+      <path d="M14 29 Q100 11 191 28 M17 88 Q98 105 187 87" fill="none" stroke="#e8ad22" stroke-width="3" opacity=".65"/>
+      <text x="102" y="53" font-size="27" font-weight="800" fill="#202020">대화 수집</text>
+      <text x="102" y="82" font-size="17" fill="#202020">Codex · Claude · Anti</text>
+    </g>
+    <g transform="translate(330 78)">
+      <rect width="205" height="112" rx="25" fill="#cbe6ff" stroke="#202020" stroke-width="4"/>
+      <path d="M14 30 Q100 13 190 29 M16 88 Q98 103 190 86" fill="none" stroke="#6d9fd3" stroke-width="3" opacity=".65"/>
+      <text x="102" y="53" font-size="27" font-weight="800" fill="#202020">로컬 보관</text>
+      <text x="102" y="82" font-size="17" fill="#202020">원문은 내 컴퓨터에</text>
+    </g>
+    <g transform="translate(620 112)">
+      <rect width="240" height="120" rx="27" fill="#e2d5ff" stroke="#202020" stroke-width="4"/>
+      <path d="M15 32 Q120 10 224 31 M16 96 Q119 111 224 94" fill="none" stroke="#9a7fd4" stroke-width="3" opacity=".65"/>
+      <text x="120" y="55" font-size="26" font-weight="800" fill="#202020">Jev 분석</text>
+      <text x="120" y="87" font-size="17" fill="#202020">선택 · 명확도 · 마찰</text>
+    </g>
+    <g transform="translate(890 300)">
+      <rect width="205" height="112" rx="25" fill="#ffc9bd" stroke="#202020" stroke-width="4"/>
+      <path d="M14 30 Q100 13 190 29 M16 88 Q98 104 190 86" fill="none" stroke="#dc7967" stroke-width="3" opacity=".65"/>
+      <text x="102" y="53" font-size="27" font-weight="800" fill="#202020">리포트</text>
+      <text x="102" y="82" font-size="17" fill="#202020">오늘 · 주간 · 월간</text>
+    </g>
+    <g transform="translate(635 535)">
+      <rect width="240" height="112" rx="25" fill="#c8efc7" stroke="#202020" stroke-width="4"/>
+      <path d="M15 30 Q120 12 224 29 M16 88 Q119 103 224 86" fill="none" stroke="#72b66e" stroke-width="3" opacity=".65"/>
+      <text x="120" y="53" font-size="25" font-weight="800" fill="#202020">init addendum</text>
+      <text x="120" y="82" font-size="17" fill="#202020">반복 패턴만 추가</text>
+    </g>
+    <g transform="translate(280 535)">
+      <rect width="220" height="112" rx="25" fill="#f7c4e9" stroke="#202020" stroke-width="4"/>
+      <path d="M15 30 Q110 12 205 29 M16 88 Q109 103 205 86" fill="none" stroke="#c56aa9" stroke-width="3" opacity=".65"/>
+      <text x="110" y="53" font-size="25" font-weight="800" fill="#202020">더 나은 질문</text>
+      <text x="110" y="82" font-size="17" fill="#202020">그리고 다시 수집</text>
+    </g>
+  </g>
+  <g transform="translate(18 420)">
+    <image x="0" y="0" width="180" height="194" preserveAspectRatio="xMidYMax meet" href="yas-thinking.png" xlink:href="yas-thinking.png"/>
+    <text x="82" y="224" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#202020" transform="rotate(-5 82 224)">“내가 문제였나?”</text>
+  </g>
+  <text x="600" y="48" text-anchor="middle" font-family="Arial, 'Apple SD Gothic Neo', sans-serif" font-size="30" font-weight="900" fill="#202020">YAS LOOP — 너를 분석해라</text>
+</svg>
