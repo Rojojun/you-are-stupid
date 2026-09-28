@@ -5,7 +5,7 @@ const root = process.cwd()
 const ignored = new Set(['.git', '.data', 'node_modules', 'dist', 'target', '.turbo'])
 const ignoredFiles = new Set(['.env.example', 'server/public-check.mjs', 'src/redaction.ts'])
 const secretPatterns = [
-  /TYPESAFE_API_KEY\s*=\s*(?!$|여기에|your_|YOUR_)[^\s#]+/i,
+  /TYPESAFE_API_KEY\s*=\s*(?!$|여기에|발급받은|your_|YOUR_)[^\s#]+/i,
   /(?:apikey_|sk-[A-Za-z0-9]|gh[pousr]_[A-Za-z0-9]|github_pat_|xox[baprs]-)/,
   /Bearer\s+[A-Za-z0-9._~+/=-]{20,}/i,
 ]
